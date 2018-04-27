@@ -15,6 +15,7 @@ h1 {
   width: 100%;
   padding: 0;
   margin: 10px;
+  border: 1px solid black;
 }
 #container {
   min-width: 400px;
