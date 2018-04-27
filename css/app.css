@@ -1,0 +1,25 @@
+body {
+  font-family: sans-serif;
+  width: 100vw;
+  margin: auto;
+}
+header {
+  margin: auto;
+  width: 100vw;
+}
+h1 {
+  text-align: center;
+}
+#pong {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 10px;
+}
+#container {
+  min-width: 400px;
+  max-width: 85vw;
+  min-height: 400px;
+  max-height: 85vh;
+  margin: auto;
+}
