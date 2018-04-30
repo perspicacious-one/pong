@@ -18,9 +18,9 @@ class PlayerOne {
   // collisionX() {
   //   return (this.posX + this.width);
   // }
-  // upperBound() {
-  //   return (this.posY - this.vy);
-  // }
+  upperBound() {
+    return (this.posY - this.vy);
+  }
 
   lowerBound() {
     return (this.posY + this.height + this.vy);
