@@ -4,7 +4,7 @@ class Ball {
     this.yPos = (ctx.height / 2);
     this.xPos = (ctx.width / 2);
     this.radius = 15;
-    this.vectorMax = 4;
+    this.vectorMax = 6;
     this.velocityY = 0;
     this.velocityX = 0;
     this.path = [];
@@ -16,8 +16,13 @@ class Ball {
     var max = Math.ceil(this.vectorMax);
     var min = Math.floor(1);
     this.velocityY = Math.floor(Math.random() * (max - min)) + min;
-    this.velocityX = (this.vectorMax - this.velocityY);
+    this.velocityX = Math.floor(this.vectorMax - this.velocityY);
     this.path.push([this.xPos, this.yPos])
+  }
+
+  xRange() {
+    var arr = Array.from(range(this.xPos - this.radius, this.xPos + this.radius));
+    return arr;
   }
 
   xLimit() {
@@ -31,7 +36,7 @@ class Ball {
     var x = this.xPos + this.velocityX;
     var y = this.yPos + this.velocityY;
 
-    if(x > this.xLimit()) {
+    if(x > this.xLimit() || collisionDetected()) {
       this.velocityX *= -1;
     } else if(x < (0 + this.radius)) {
       this.velocityX *= -1;
@@ -50,8 +55,8 @@ class Ball {
 
   move() {
     this.setPath();
-    this.xPos = this.path[1][0];
-    this.yPos = this.path[1][1];
+    this.xPos = Math.round(this.path[1][0]);
+    this.yPos = Math.round(this.path[1][1]);
     this.draw();
   }
 

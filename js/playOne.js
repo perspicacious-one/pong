@@ -3,21 +3,21 @@
 // const main = document.querySelector('#container');
 
 class PlayerOne {
-  constructor() {
+  constructor(x) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
     this.posX = 10;
     this.height = parseInt(ctx.height * .15);
     this.width = 15;
-    this.vy = 4;
+    this.vy = 8;
     this.draw();
   };
 
-  // collisionY() {
-  //   return range(this.posY, this.height);
-  // }
-  // collisionX() {
-  //   return (this.posX + this.width);
-  // }
+  collisionAreaY() {
+    return Array.from(range(this.posY, this.posY + this.height));
+  }
+  collisionAreaX() {
+    return (this.posX + this.width);
+  }
   upperBound() {
     return (this.posY - this.vy);
   }
@@ -45,7 +45,6 @@ class PlayerOne {
       } else {
         this.draw();
       }
-
   }
 
   draw() {

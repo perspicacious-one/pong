@@ -8,6 +8,8 @@ ctx.width = canvas.width;
 ctx.height = canvas.height;
 
 function* range(start, end) {
+    start = Math.ceil(start);
+    end = Math.ceil(end);
     yield start;
     if (start === end) return;
     yield* range(start + 1, end);
@@ -16,7 +18,15 @@ function* range(start, end) {
 function animate() {
   window.requestAnimationFrame(step)
 }
-
+function collisionDetected() {
+  var ballDiameter = ball.xRange();
+  var paddleLength = playOne.collisionAreaY();
+  if(ballDiameter.includes(playOne.collisionAreaX()) && paddleLength.includes(ball.yPos)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 function step(key) {
   ctx.clearRect(0, 0, ctx.height, ctx.width);
   board.draw();
@@ -39,4 +49,4 @@ const playOne = new PlayerOne;
 const playTwo = new PlayerTwo;
 const ball = new Ball;
 
-var interval = window.setInterval(function() {animate()}, 20);
+var interval = window.setInterval(function() {animate()}, 15);
