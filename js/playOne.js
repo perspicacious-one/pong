@@ -12,20 +12,32 @@ class PlayerOne {
     this.draw();
   };
 
+  // collisionY() {
+  //   return range(this.posY, this.height);
+  // }
+  // collisionX() {
+  //   return (this.posX + this.width);
+  // }
+  // upperBound() {
+  //   return (this.posY - this.vy);
+  // }
 
+  lowerBound() {
+    return (this.posY + this.height + this.vy);
+  }
 
   move(key) {
 
-      if(key === 40) {
-        if (this.posY >= 2) {
-          this.posY += this.vy;
+      if(key === 38) {
+        if (this.upperBound() >= this.vy) {
+          this.posY -= this.vy;
           this.draw();
         } else {
           this.draw();
         }
-      } else if(key === 38) {
-          if(this.posY <= ctx.height - this.vy) {
-            this.posY -= this.vy;
+      } else if(key === 40) {
+          if(this.lowerBound() <= ctx.height - this.vy) {
+            this.posY += this.vy;
             this.draw();
           } else {
             this.draw();
