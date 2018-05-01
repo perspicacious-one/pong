@@ -1,8 +1,8 @@
 
 class Ball {
   constructor() {
-    this.yPos = (ctx.height / 2);
-    this.xPos = (ctx.width / 2);
+    this.posY = (ctx.height / 2);
+    this.posX = (ctx.width / 2);
     this.radius = 15;
     this.vectorMax = 6;
     this.velocityY = 0;
@@ -17,12 +17,14 @@ class Ball {
     var min = Math.floor(1);
     this.velocityY = Math.floor(Math.random() * (max - min)) + min;
     this.velocityX = Math.floor(this.vectorMax - this.velocityY);
-    this.path.push([this.xPos, this.yPos])
+    this.path.push([this.posX, this.posY])
   }
 
   xRange() {
-    var arr = Array.from(range(this.xPos - this.radius, this.xPos + this.radius));
-    return arr;
+    return Array.from(range(this.posX - this.radius, this.posX + this.radius));
+  }
+  yRange() {
+    return Array.from(range(this.posY - this.radius, this.posY + this.radius));
   }
 
   xLimit() {
@@ -33,8 +35,8 @@ class Ball {
     return ctx.height - this.radius;
   }
   setPath() {
-    var x = this.xPos + this.velocityX;
-    var y = this.yPos + this.velocityY;
+    var x = this.posX + this.velocityX;
+    var y = this.posY + this.velocityY;
 
     if(x > this.xLimit() || collisionDetected()) {
       this.velocityX *= -1;
@@ -47,7 +49,7 @@ class Ball {
       this.velocityY *= -1;
     }
 
-    this.path.push([this.xPos + this.velocityX, this.yPos + this.velocityY]);
+    this.path.push([this.posX + this.velocityX, this.posY + this.velocityY]);
     if(this.path.length > 2) {
       this.path.shift();
     }
@@ -55,14 +57,14 @@ class Ball {
 
   move() {
     this.setPath();
-    this.xPos = Math.round(this.path[1][0]);
-    this.yPos = Math.round(this.path[1][1]);
+    this.posX = Math.round(this.path[1][0]);
+    this.posY = Math.round(this.path[1][1]);
     this.draw();
   }
 
   draw() {
     ctx.beginPath();
-    ctx.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
+    ctx.arc(this.posX, this.posY, this.radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = '#FF5A36';
     ctx.fill();
     ctx.lineWidth = 1;

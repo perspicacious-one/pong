@@ -2,51 +2,72 @@
 // const ctx = canvas.getContext('2d');
 // const main = document.querySelector('#container');
 
-class PlayerOne {
-  constructor(x) {
+class Paddle {
+  constructor(x, speed, inverted) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
-    this.posX = 10;
+    this.posX = x;
     this.height = parseInt(ctx.height * .15);
     this.width = 15;
-    this.vy = 8;
+    this.vy = speed;
+    this.inverted = inverted;
     this.draw();
   };
 
   collisionAreaY() {
-    return Array.from(range(this.posY, this.posY + this.height));
+    return Array.from(range(this.posY - 1, this.posY + this.height + 1));
   }
   collisionAreaX() {
-    return (this.posX + this.width);
+    return this.inverted ? (this.posX) : (this.posX + this.width);
+  }
+
+  middleY() {
+    return (this.posY + this.height / 2)
   }
   upperBound() {
-    return (this.posY - this.vy);
+    var nextY = this.posY - this.vy;
+    if(nextY <= 0) {
+      return 0;
+    } else {
+      return (this.posY - this.vy);
+    }
   }
 
   lowerBound() {
-    return (this.posY + this.height + this.vy);
+    var nextY = this.posY + this.height + this.vy;
+    if(nextY > ctx.height) {
+      return (ctx.height - this.height);
+    } else {
+      return (this.posY + this.vy);
+    }
   }
 
   move(key) {
 
       if(key === 38) {
-        if (this.upperBound() >= this.vy) {
-          this.posY -= this.vy;
-          this.draw();
-        } else {
-          this.draw();
-        }
+        this.posY = this.upperBound();
+        this.draw();
       } else if(key === 40) {
-          if(this.lowerBound() <= ctx.height - this.vy) {
-            this.posY += this.vy;
-            this.draw();
-          } else {
-            this.draw();
-          }
+        this.posY = this.lowerBound();
+        this.draw();
       } else {
         this.draw();
       }
   }
-
+  update(ball) {
+    if(ball.yRange().includes(this.middleY())){
+      this.draw();
+      return;
+    }
+    if(ball.posY > this.middleY()) {
+      this.posY = this.lowerBound();
+      this.draw();
+    } else if(ball.posY < (this.middleY())) {
+      this.posY = this.upperBound();
+      this.draw();
+    } else {
+      this.draw();
+    }
+  }
   draw() {
     ctx.fillStyle = "#FF5A36";
     ctx.fillRect(this.posX, this.posY, this.width, this.height);
