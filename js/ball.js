@@ -4,20 +4,39 @@ class Ball {
     this.posY = (ctx.height / 2);
     this.posX = (ctx.width / 2);
     this.radius = 15;
-    this.vectorMax = 6;
+    this.vectorMax = 8;
     this.velocityY = 0;
     this.velocityX = 0;
     this.path = [];
+    this.reset = function() {
+      this.posY = (ctx.height / 2);
+      this.posX = (ctx.width / 2);
+      this.velocityY = 0;
+      this.velocityX = 0;
+      this.path = [];
+      this.init();
+      this.draw();
+    }
     this.init();
     this.draw();
   };
 
   init() {
     var max = Math.ceil(this.vectorMax);
-    var min = Math.floor(1);
-    this.velocityY = Math.floor(Math.random() * (max - min)) + min;
+    var min = Math.floor(this.vactorMax * -1);
+
+    this.velocityY = Math.floor(Math.random() * max);
     this.velocityX = Math.floor(this.vectorMax - this.velocityY);
+    console.log(this.velocityX + ", " + this.velocityY)
     this.path.push([this.posX, this.posY])
+  }
+
+  isMovingDown() {
+    if(this.path[0][1] < this.path[1][1]) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   xRange() {
@@ -34,6 +53,7 @@ class Ball {
   yLimit() {
     return ctx.height - this.radius;
   }
+
   setPath() {
     var x = this.posX + this.velocityX;
     var y = this.posY + this.velocityY;

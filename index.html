@@ -23,11 +23,25 @@
       </canvas>
       <div class="modal is-active">
         <div class="modal-background"></div>
-        <div class="modal-content box">
-          <h1 class="title">Ready?</h1>
-          <div class="buttons is-centered">
-          <button class='button is-success' onClick="start()">Let's Go!</button>
-          <div>
+        <div class="modal-content content box">
+            <div class="columns is-centered">
+              <div class="column is-centered"><h2 class="modal-title">Ready?</h1>
+                <div class="columns">
+                  <div class="column is-one-third" id="score-left"></div>
+                  <div class="column"></div>
+                  <div class="column" id="score-right"></div>
+                </div>
+                <div class="columns">
+                  <div class="column is-one-third"></div>
+                  <div class="column">
+                    <button class='button is-success' onClick="start()">Let's Go!</button>
+                    <button class='button is-danger' onClick="document.location.reload(true)">Restart</button>
+                  </div>
+                  <div class="column"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

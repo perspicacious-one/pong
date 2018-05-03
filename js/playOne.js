@@ -8,8 +8,14 @@ class Paddle {
     this.posX = x;
     this.height = parseInt(ctx.height * .15);
     this.width = 15;
+    this.score = 0;
     this.vy = speed;
     this.inverted = inverted;
+    this.reset = function() {
+      this.posX = x;
+      this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
+      this.draw();
+    }
     this.draw();
   };
 
@@ -54,19 +60,23 @@ class Paddle {
       }
   }
   update(ball) {
+
     if(ball.yRange().includes(this.middleY())){
       this.draw();
       return;
     }
-    if(ball.posY > this.middleY()) {
+    if(ball.posY > (this.middleY() + 4)) {
       this.posY = this.lowerBound();
       this.draw();
-    } else if(ball.posY < (this.middleY())) {
+    } else if(ball.posY < (this.middleY() - 4)) {
       this.posY = this.upperBound();
       this.draw();
     } else {
       this.draw();
     }
+  }
+  clear() {
+    ctx.clearRect(this.posX, this.posY, this.width, this.height);
   }
   draw() {
     ctx.fillStyle = "#FF5A36";

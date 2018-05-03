@@ -85,10 +85,7 @@ h1 {
 .inactive {
   display: none;
 }
-/* .modal-header {
-  text-align: center;
-  margin: 20px auto 20px auto;
-  width: 100%;
-  display: block;
-
-}*/
+.modal-title {
+  text-align: center !important;
+  margin-bottom: 20px;
+}
