@@ -16,19 +16,17 @@
   </head>
   <body>
     <header id="top">
-        <h1 class="title is-1">Pong</h1>
+      <canvas id="title"></canvas>
     </header>
     <main id="container">
-      <canvas id="pong">
-      </canvas>
+      <canvas id="pong"></canvas>
       <div class="modal is-active">
         <div class="modal-background"></div>
         <div class="modal-content content box">
             <div class="columns is-centered">
-              <div class="column is-centered" id="modal-title-area"><h2 class="modal-title" id="prompt">Ready?</h1>
+              <div class="column is-centered" id="modal-title-area"><h2 class="modal-title" id="prompt">Ready?</h1><hr>
                 <div class="columns">
-                  <div class="column is-one-third" id="score-left"></div>
-                  <div class="column"></div>
+                  <div class="column is-one-half" id="score-left"></div>
                   <div class="column" id="score-right"></div>
                 </div>
                 <div class="columns">
@@ -46,6 +44,7 @@
         </div>
       </div>
     </main>
+    <script type="text/javascript" src="js/title.js"></script>
     <script type="text/javascript" src="js/ball.js"></script>
     <script type="text/javascript" src="js/playOne.js"></script>
     <script type="text/javascript" src="js/board.js"></script>

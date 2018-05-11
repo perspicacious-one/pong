@@ -6,7 +6,7 @@ class Paddle {
   constructor(x, speed, inverted) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
     this.posX = x;
-    this.height = parseInt(ctx.height * .12);
+    this.height = parseInt(ctx.height * .14);
     this.width = 15;
     this.score = 0;
     this.vy = speed;
