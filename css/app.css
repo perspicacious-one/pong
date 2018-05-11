@@ -40,20 +40,27 @@
 body {
   font-family: sans-serif;
   width: 100vw;
-  margin: auto;
+  margin: 0;
+  padding: 0;
+  background-color: "#363636" !important;
 }
-header {
-  margin: auto;
+#top {
+  margin: 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
   width: 100vw;
 }
 h1 {
   text-align: center;
+  margin: auto;
 }
 #pong {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 10px;
+  border: 2px solid "#00D1B2" !important;
+  border-radius: 6px;
 }
 #container {
   min-width: 400px;
@@ -83,7 +90,7 @@ h1 {
   flex-wrap: wrap;
 } */
 .inactive {
-  display: none;
+  display: none !important;
 }
 .modal-title {
   text-align: center !important;

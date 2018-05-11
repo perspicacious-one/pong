@@ -13,7 +13,7 @@ class Board {
   }
 
   draw() {
-    ctx.fillStyle = "#12264a";
+    ctx.fillStyle = dark;
     ctx.fillRect(0, 0, ctx.width, ctx.height);
   }
 }

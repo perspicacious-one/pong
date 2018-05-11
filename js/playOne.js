@@ -6,7 +6,7 @@ class Paddle {
   constructor(x, speed, inverted) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
     this.posX = x;
-    this.height = parseInt(ctx.height * .15);
+    this.height = parseInt(ctx.height * .12);
     this.width = 15;
     this.score = 0;
     this.vy = speed;
@@ -20,7 +20,7 @@ class Paddle {
   };
 
   collisionAreaY() {
-    return Array.from(range(this.posY - 1, this.posY + this.height + 1));
+    return Array.from(range(this.posY, this.posY + this.height));
   }
   collisionAreaX() {
     return this.inverted ? (this.posX) : (this.posX + this.width);
@@ -79,7 +79,7 @@ class Paddle {
     ctx.clearRect(this.posX, this.posY, this.width, this.height);
   }
   draw() {
-    ctx.fillStyle = "#FF5A36";
+    ctx.fillStyle = primary;
     ctx.fillRect(this.posX, this.posY, this.width, this.height);
   }
 }

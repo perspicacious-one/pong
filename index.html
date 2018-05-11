@@ -15,8 +15,8 @@
 
   </head>
   <body>
-    <header>
-        <h1 class="title">Pong</h1>
+    <header id="top">
+        <h1 class="title is-1">Pong</h1>
     </header>
     <main id="container">
       <canvas id="pong">
@@ -25,7 +25,7 @@
         <div class="modal-background"></div>
         <div class="modal-content content box">
             <div class="columns is-centered">
-              <div class="column is-centered"><h2 class="modal-title">Ready?</h1>
+              <div class="column is-centered" id="modal-title-area"><h2 class="modal-title" id="prompt">Ready?</h1>
                 <div class="columns">
                   <div class="column is-one-third" id="score-left"></div>
                   <div class="column"></div>
@@ -34,8 +34,9 @@
                 <div class="columns">
                   <div class="column is-one-third"></div>
                   <div class="column">
-                    <button class='button is-success' onClick="start()">Let's Go!</button>
-                    <button class='button is-danger' onClick="document.location.reload(true)">Restart</button>
+                    <button class='button is-success' id="go" onClick="start()">Let's Go!</button>
+                    <button class='button is-danger' id="restart" onClick="document.location.reload(true)">Restart</button>
+                    <button class='button is-success inactive' id="new-game" onClick="document.location.reload(true)">New Game</button>
                   </div>
                   <div class="column"></div>
                 </div>

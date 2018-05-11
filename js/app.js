@@ -9,49 +9,17 @@ ctx.height = canvas.height;
 
 var interval;
 
+const dark = "#363636";
+const primary = "#00D1B2";
+const secondary = "#FF3860";
+const darkInvert = "#F5F5F5";
+
 const board = new Board;
-const playOne = new Paddle(20, 10, false);
-const playTwo = new Paddle((ctx.width - 35), 5, true);
+const playOne = new Paddle(30, 10, false);
+const playTwo = new Paddle((ctx.width - 45), 3, true);
 const ball = new Ball;
 
-function collisionDetected() {
-  var ballDiameter = ball.xRange();
-  var paddleOne = playOne.collisionAreaY();
-  var paddleTwo = playTwo.collisionAreaY();
 
-  if(ballDiameter.includes(playOne.collisionAreaX()) && paddleOne.includes(ball.posY) && ball.posX > (playOne.posX + playOne.width))  {
-    // pathRedirect(playOne);
-    return true;
-  } else if(ballDiameter.includes(playTwo.collisionAreaX()) && paddleTwo.includes(ball.posY) && ball.posX <= playTwo.posX) {
-    // pathRedirect(playTwo);
-    return true;
-  } else {
-    return false;
-  }
-
-}
-
-// function pathRedirect(paddle) {
-//   var onLowerEdge = function() { (ball.posY + ball.radius) >= (paddle.posY + paddle.height); }
-//   var onUpperEdge = function() { (ball.posY + ball.radius) <= paddle.posY }
-//
-//   switch (true) {
-//     case ball.isMovingDown() && onLowerEdge:
-//       ball.velocityY *= 1.5;
-//       break;
-//     case !ball.isMovingDown() && onLowerEdge:
-//       ball.velocityY *= -1;
-//       break;
-//     case ball.isMovingDown() && onUpperEdge:
-//       ball.velocityY *= -1;
-//       break;
-//     case !ball.isMovingDown() && onUpperEdge:
-//       ball.velocityY *= 1.5;
-//       break;
-//     default:
-//       break;
-//   }
-// }
 window.addEventListener('keydown', function(e) {
   if(e.keyCode === 38) {
     stepKey(38);
@@ -68,6 +36,67 @@ function* range(start, end) {
     yield* range(start + 1, end);
 }
 
+var collision = function(paddle) {
+  var dx = ball.posX - paddle.collisionAreaX();
+  return paddle.collisionAreaY().some( y => {
+    var dy = ball.posY - y;
+    var distance = Math.sqrt(dx * dx + dy * dy);
+
+    if(distance < ball.radius) {
+      return true;
+    }
+  })
+}
+
+function edgeRedirect() {
+  var onLeftEdge = (ball.posX - ball.radius) <= 1;
+  var onRightEdge = (ball.posX + ball.radius) >= (ctx.width - 1);
+  var onTopEdge = (ball.posY - ball.radius) <= 0;
+  var onBottomEdge = (ball.posY + ball.radius) >= ctx.height;
+
+  if (onLeftEdge) {
+    checkScore(2);
+    ball.adjustVelocity(-1, 1);
+    return;
+  }
+  if (onRightEdge) {
+    checkScore(1);
+    ball.adjustVelocity(-1, 1);
+    return;
+  }
+  if (onTopEdge) {
+    ball.adjustVelocity(1, -1);
+    return;
+  }
+  if (onBottomEdge) {
+    ball.adjustVelocity(1, -1);
+    return;
+  }
+}
+
+function paddleRedirect(paddle) {
+  var onLowerEdge = ball.posY >= (paddle.posY + paddle.height);
+  var onUpperEdge = ball.posY <= paddle.posY ;
+
+  if(ball.isMovingDown() && onLowerEdge) {
+    ball.adjustVelocity(-1, 2);
+    return;
+  }
+  if(!ball.isMovingDown() && onLowerEdge) {
+    ball.adjustVelocity(-1, -1.1);
+    return;
+  }
+  if(ball.isMovingDown() && onUpperEdge) {
+    ball.adjustVelocity(-1, -1);
+    return;
+  }
+  if(!ball.isMovingDown() && onUpperEdge) {
+    ball.adjustVelocity(-1, 2);
+    return;
+  }
+  ball.adjustVelocity(-1, 1);
+}
+
 function start() {
   var modal = document.querySelector(".modal");
   modal.classList.remove('is-active');
@@ -75,6 +104,25 @@ function start() {
   interval = window.setInterval(function() {animate()}, 15);
 }
 
+function end() {
+  addNewElement('h2', "Game Over!", 'prompt', "modal-title", 'modal-title-area');
+  addNewElement('h3', "Player One: " + playOne.score.toString(), 'score-left-text', 'subtitle', 'score-left');
+  addNewElement('h3', "Player Two: " + playTwo.score.toString(), 'score-right-text', 'subtitle', 'score-right');
+
+  var go = document.getElementById("go");
+  var restart = document.getElementById("restart");
+  var newButton = document.getElementById("new-game");
+  go.classList.add('inactive');
+  go.classList.remove('is-active');
+
+  restart.classList.add('inactive');
+  restart.classList.remove('is-active');
+
+  newButton.classList.add('is-active');
+  newButton.classList.remove('inactive');
+  var modal = document.querySelector(".modal");
+  modal.classList.add('is-active');
+}
 function reset() {
   ctx.clearRect(0, 0, ctx.height, ctx.width);
   board.draw();
@@ -88,6 +136,7 @@ function reset() {
 function ShowScore() {
   addNewElement('h3', "Player One: " + playOne.score.toString(), 'score-left-text', 'subtitle', 'score-left');
   addNewElement('h3', "Player Two: " + playTwo.score.toString(), 'score-right-text', 'subtitle', 'score-right');
+
 
   var modal = document.querySelector(".modal");
   modal.classList.add('is-active');
@@ -109,9 +158,21 @@ function addNewElement(tag, text, id, selectors, parentId) {
     parent.appendChild(element);
   }
 }
+
 function stepKey(key) {
   playOne.move(key);
-  checkScore();
+}
+
+
+function moveBall() {
+  if(collision(playOne) == true) {
+    paddleRedirect(playOne);
+  } else if(collision(playTwo) == true) {
+    paddleRedirect(playTwo);
+  } else {
+    edgeRedirect();
+  }
+  ball.move();
 }
 function step(key) {
   playOne.clear();
@@ -119,16 +180,21 @@ function step(key) {
   board.draw();
   playOne.move(key);
   playTwo.update(ball);
-  ball.move();
-  checkScore();
+  moveBall();
 }
 
-function checkScore() {
-  if(ball.posX <= playOne.posX) {
+function checkScore(arg) {
+  if(arg == 2) {
     playTwo.score += 1;
+    if(playTwo.score >= 2) {
+      end();
+    }
     reset();
-  } else if (ball.posX >= playTwo.posX) {
+  } else if (arg == 1) {
     playOne.score += 1;
+    if(playOne.score >= 2) {
+      end();
+    }
     reset();
   }
   return;

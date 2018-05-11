@@ -23,7 +23,7 @@ class Ball {
 
   init() {
     var max = Math.ceil(this.vectorMax);
-    var min = Math.floor(this.vactorMax * -1);
+    var min = Math.floor(this.vectorMax * -1);
 
     this.velocityY = Math.floor(Math.random() * max);
     this.velocityX = Math.floor(this.vectorMax - this.velocityY);
@@ -39,37 +39,38 @@ class Ball {
     }
   }
 
+  isMovingRight() {
+    if(this.path[0][0] < this.path[1][0]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   xRange() {
     return Array.from(range(this.posX - this.radius, this.posX + this.radius));
   }
-  yRange() {
-    return Array.from(range(this.posY - this.radius, this.posY + this.radius));
+
+  yRange(val = 0) {
+    if(val = 0) {
+      return Array.from(range(this.posY - this.radius, this.posY + this.radius));
+    } else if (val = 1) {
+      return Array.from(range(this.posY - this.radius, this.posY));
+    } else if (val = 2) {
+      return Array.from(range(this.posY + this.radius, this.posY));
+    }
   }
 
-  xLimit() {
-    return ctx.width - this.radius;
-  }
-
-  yLimit() {
-    return ctx.height - this.radius;
+  adjustVelocity(x, y) {
+    this.velocityX *= x;
+    this.velocityY *= y;
+    console.log([this.velocityY, this.velocityX, y, x]);
   }
 
   setPath() {
     var x = this.posX + this.velocityX;
     var y = this.posY + this.velocityY;
-
-    if(x > this.xLimit() || collisionDetected()) {
-      this.velocityX *= -1;
-    } else if(x < (0 + this.radius)) {
-      this.velocityX *= -1;
-    }
-    if(y > this.yLimit()) {
-      this.velocityY *= -1;
-    } else if(y < (0 + this.radius)) {
-      this.velocityY *= -1;
-    }
-
-    this.path.push([this.posX + this.velocityX, this.posY + this.velocityY]);
+    this.path.push([x,y]);
     if(this.path.length > 2) {
       this.path.shift();
     }
@@ -85,10 +86,10 @@ class Ball {
   draw() {
     ctx.beginPath();
     ctx.arc(this.posX, this.posY, this.radius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = '#FF5A36';
+    ctx.fillStyle = secondary;
     ctx.fill();
     ctx.lineWidth = 1;
-    ctx.strokeStyle = '#FF5A36';
+    ctx.strokeStyle = secondary;
     ctx.stroke();
   }
 }
