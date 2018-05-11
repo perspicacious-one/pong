@@ -9,11 +9,6 @@ ctx.height = canvas.height;
 
 var interval;
 
-const dark = "#363636";
-const primary = "#00D1B2";
-const secondary = "#FF3860";
-const darkInvert = "#F5F5F5";
-
 const board = new Board;
 const playOne = new Paddle(30, 10, false);
 const playTwo = new Paddle((ctx.width - 45), 3, true);
@@ -186,13 +181,13 @@ function step(key) {
 function checkScore(arg) {
   if(arg == 2) {
     playTwo.score += 1;
-    if(playTwo.score >= 2) {
+    if(playTwo.score >= 10) {
       end();
     }
     reset();
   } else if (arg == 1) {
     playOne.score += 1;
-    if(playOne.score >= 2) {
+    if(playOne.score >= 10) {
       end();
     }
     reset();
