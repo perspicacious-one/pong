@@ -2,7 +2,7 @@
 
 # Pong
 
-![Pong logo](./assets/title.png)
+![Pong logo](./assets/title.png?raw=true)
 
 #### Recreating pong from scratch using only html5 canvas, javascript, and css.
 
