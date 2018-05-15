@@ -1,5 +1,9 @@
-![Pong logo](assets/title.png)
+
+
 # Pong
+
+![Pong logo](./assets/title.png)
+
 #### Recreating pong from scratch using only html5 canvas, javascript, and css.
 
 
