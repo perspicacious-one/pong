@@ -37,7 +37,7 @@ Collisions are detected through a series of methods. If within a general range, 
 
 
 Fine grain collision detection:
-```
+```javascript
 var collision = function(paddle) {
   var dx = ball.posX - paddle.collisionAreaX();
   return paddle.collisionAreaY().some( y => {
