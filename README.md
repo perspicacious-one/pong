@@ -2,7 +2,7 @@
 
 # Pong
 
-![Pong logo](./assets/title.png?raw=true)
+![Pong logo](https://github.com/perspicacious-one/pong/blob/master/assets/title.PNG)
 
 #### Recreating pong from scratch using only html5 canvas, javascript, and css.
 
