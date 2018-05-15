@@ -1,6 +1,5 @@
 
 
-# Pong
 
 ![Pong logo](https://github.com/perspicacious-one/pong/blob/master/assets/title.PNG)
 
