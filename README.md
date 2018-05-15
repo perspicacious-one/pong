@@ -48,4 +48,5 @@ var collision = function(paddle) {
       return true;
     }
   })
-}```
+}
+```
