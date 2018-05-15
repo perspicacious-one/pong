@@ -1,3 +1,5 @@
+
+
 class Paddle {
   constructor(x, speed, inverted) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
