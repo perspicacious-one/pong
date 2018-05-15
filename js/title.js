@@ -21,14 +21,6 @@ function drawTitle(ctx) {
   ctx.fillStyle = dark;
   ctx.fillText("ONG", 75, 72);
 
-  // border outline
-
-  // ctx.beginPath();
-  // ctx.lineWidth="4";
-  // ctx.strokeStyle=dark;
-  // ctx.rect(0, 0, 190, 80);
-  // ctx.stroke();
-
 }
 
 var title = (function() {

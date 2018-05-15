@@ -1,7 +1,3 @@
-// const canvas = document.querySelector("#pong");
-// const ctx = canvas.getContext('2d');
-// const main = document.querySelector('#container');
-
 class Paddle {
   constructor(x, speed, inverted) {
     this.posY = parseInt((ctx.height/2) - (ctx.height * .1));
